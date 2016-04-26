@@ -2,6 +2,8 @@ package com.surfm.guessnum;
 
 import java.util.Random;
 
+import com.firebase.client.Firebase;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,11 +15,15 @@ import android.widget.Button;
 
 public class MainActivity extends Activity implements OnClickListener {
 
+	private Firebase firebase = null;
 	private Button startButton;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Firebase.setAndroidContext(this);
+		firebase = new Firebase("https://tutorialclass.firebaseio.com/"
+				+ Constant.BASE_GAME_ROOM);
 		setContentView(R.layout.activity_main);
 		initViews();
 	}
@@ -25,7 +31,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private void initViews() {
 		startButton = (Button) findViewById(R.id.startButton);
 		startButton.setOnClickListener(this);
-		
+
 	}
 
 	@Override
@@ -33,14 +39,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		Random r = new Random();
 		int ans = r.nextInt(100);
 		Intent i = new Intent(this, GameRoomActivity.class);
-		Bundle b = new Bundle();
-		b.putInt("Ans", ans);
-		i.putExtras(b);
+		firebase.removeValue();
+		firebase.child("finalAns").setValue(ans);
 		startActivity(i);
 	}
-	
-	
-	
-	
 
 }
