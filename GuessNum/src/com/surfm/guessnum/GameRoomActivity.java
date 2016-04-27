@@ -76,12 +76,12 @@ public class GameRoomActivity extends Activity implements OnClickListener,
 
 	private void ansNext(int ans) {
 		if (ans == finalAns) {
-			Toast.makeText(this, "Bingo", Toast.LENGTH_LONG).show();
+			DialogKit.showAlertDialog(this, "Bingo", null);
 		} else if (ans > finalAns) {
-			Toast.makeText(this, "沒有答對", Toast.LENGTH_LONG).show();
+			DialogKit.showAlertDialog(this, "沒有答對", null);
 			maxHint = ans;
 		} else if (ans < finalAns) {
-			Toast.makeText(this, "沒有答對", Toast.LENGTH_LONG).show();
+			DialogKit.showAlertDialog(this, "沒有答對", null);
 			minHint = ans;
 		}
 		refleshHint();
